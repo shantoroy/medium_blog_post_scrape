@@ -7,7 +7,7 @@ import json
 
 
 class MediumScrapper(object):
-    def __init__(self, tag, CHROME_DRIVER_PATH='../chromedriver'):
+    def __init__(self, tag, CHROME_DRIVER_PATH='../../chromedriver'):
         self.CHROME_DRIVER_PATH = CHROME_DRIVER_PATH
         self.tag = tag
         content = self.get_intial_content()
