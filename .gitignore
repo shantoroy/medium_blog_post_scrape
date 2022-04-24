@@ -1,3 +1,5 @@
 **/__pycache__/
 .*
 !/.gitignore
+data
+script_post_scrape/v.Apr.2022/tags.txt

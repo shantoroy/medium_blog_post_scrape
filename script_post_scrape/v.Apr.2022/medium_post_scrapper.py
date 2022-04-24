@@ -1,9 +1,14 @@
 import time
 from bs4 import BeautifulSoup
-from selenium import webdriver
 import requests
 from post_details import PostDetais
 import json
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class MediumScrapper(object):
@@ -15,27 +20,47 @@ class MediumScrapper(object):
 
     def get_intial_content(self, base_url="https://medium.com/search?q="):
         base_url = base_url + self.tag
-        driver = webdriver.Chrome(self.CHROME_DRIVER_PATH)
+        
+        options = webdriver.ChromeOptions() 
+        options.add_argument("start-maximized")
+        options.add_argument('disable-infobars')
+        driver = webdriver.Chrome(chrome_options=options, executable_path=r'../../../chromedriver')
         driver.get(base_url)
-        scrolls = 300
-        while scrolls > 0:
-            driver.execute_script(
-                "window.scrollTo(0, document.body.scrollHeight-1000);")
-            time.sleep(2)
-            scrolls -= 1
-        # driver.implicitly_wait(30)
+
+        initial_XPATH = "//*[@id='root']/div/div[3]/div/div/main/div/div/div/div/div[2]/div[9]/div/div/button"
+        max_click_SHOW_MORE = 2
+        count = 1 
+
+        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, initial_XPATH))).click()
+
+        while count < max_click_SHOW_MORE:
+            try:
+                time.sleep(10)
+                new_XPATH = initial_XPATH[:67] + str(count) + initial_XPATH[67:]
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, new_XPATH))).click()
+                print("Button clicked #", count+1)
+                count += 1
+            except TimeoutException:
+                break
+
         time.sleep(1.5)
         content = driver.execute_script(
-            "return document.documentElement.outerHTML")
+                    "return document.documentElement.outerHTML")
         driver.quit()
         return content
 
+
+    ## return list of post links
     def get_post_links(self):
-        links = []
-        class_names = "button button--smaller button--chromeless u-baseColor--buttonNormal"
-        for my_tag in self.parsed_data.find_all(class_=class_names):
-            links.append(my_tag.get('href'))
-        return links
+        post_details = PostDetais(self.parsed_data)
+        json_data = json.loads(post_details.json_response_whole())
+
+        # dictionary_view
+        # post_keys = {key:value["mediumUrl"] for key,value in json_data.items() if key.startswith("Post:")}
+        
+        # we will collect a list of URLs
+        post_URL_list = [value["mediumUrl"] for key,value in json_data.items() if key.startswith("Post:")]
+        return post_URL_list
 
     def get_post_contents(self):
         links = self.get_post_links()
@@ -67,7 +92,7 @@ class MediumScrapper(object):
                 post_title = post_details.get_title()
                 author_name, author_link = post_details.get_author_name(json_basic_script)
                 creation_date, published_date, modified_date = post_details.get_date(json_basic_script)
-                post_tags = post_details.get_tags(json_basic_script)
+                post_tags = post_details.get_tags(first_key_element, json_full_script)
                 post_readtime = post_details.get_read(first_key_element, json_full_script)
                 post_claps, post_voters = post_details.get_upvote(first_key_element, json_full_script)
                 post_contents = post_details.get_post_content()
@@ -87,6 +112,13 @@ class MediumScrapper(object):
                     "tags": post_tags
                 }
                 data.append(single_post)
+
+                # for collecting tags using the snowball mathod
+                textfile = open("tags.txt", "a")
+                for element in post_tags:
+                    textfile.write(element + "\n")
+                textfile.close()
+
             except Exception as e:
                 print("Error in scrapping link: {}".format(link))
                 print(str(e))
