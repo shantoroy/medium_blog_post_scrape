@@ -25,21 +25,45 @@ class MediumScrapper(object):
         driver = webdriver.Chrome(chrome_options=options, executable_path=r'../../../../chromedriver')
         driver.get(base_url)
 
-        initial_XPATH = "//*[@id='root']/div/div[3]/div/div/main/div/div/div/div/div[2]/div[9]/div/div/button"
+        # there are two types of XPATHs present in Medium 'Show More' Buttons
+        initial_XPATH1 = "//*[@id='root']/div/div[3]/div/div/main/div/div/div/div/div[2]/div[9]/div/div/button"
+        initial_XPATH2 = "//*[@id='root']/div/div[3]/div/div/main/div/div/div/div/div[2]/div[10]/div/div/button"
         max_click_SHOW_MORE = 500
         count = 1 
 
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, initial_XPATH))).click()
+        try:
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, initial_XPATH1))).click()
 
-        while count < max_click_SHOW_MORE:
-            try:
-                time.sleep(10)
-                new_XPATH = initial_XPATH[:67] + str(count) + initial_XPATH[67:]
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, new_XPATH))).click()
-                print("Button clicked #", count+1)
-                count += 1
-            except TimeoutException:
-                break
+            while count < max_click_SHOW_MORE:
+                try:
+                    time.sleep(10)
+                    # adding a substring (increasing integer) before 9 so that we get -> 19,29,39,49,...
+                    new_XPATH = initial_XPATH1[:67] + str(count) + initial_XPATH1[67:]
+                    print(new_XPATH)
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, new_XPATH))).click()
+                    print("Button clicked #", count+1)
+                    count += 1
+                except TimeoutException:
+                    break
+                    
+        except Exception as e:
+            print("Xpath 1 does not work... switching to Xpath2")
+
+        finally:
+            count = 2
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, initial_XPATH2))).click()
+
+            while count < max_click_SHOW_MORE:
+                try:
+                    time.sleep(10)
+                    # adding a substring (increasing integer) before 9 so that we get -> 19,29,39,49,...
+                    new_XPATH = initial_XPATH2[:67] + str(count) + initial_XPATH2[68:]
+                    print(new_XPATH)
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, new_XPATH))).click()
+                    print("Button clicked #", count)
+                    count += 1
+                except TimeoutException:
+                    break
         
         # the following no longer works since it outputs only source from initial load of URL
         # that means we only get first 9 articles
