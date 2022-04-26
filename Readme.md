@@ -1,4 +1,4 @@
-# Medium Post Scrape for Blog Dataset
+# Medium Post Scrape for Blog Dataset (Under Development)
 
 ## Initial Setup
 * Download chromedriver
@@ -9,8 +9,8 @@
 ## Medium Post Analysis
 ### Download Blog Posts
 ```Bash
-$ cd post_data
-$ python medium_post_scrapper_app.py
+$ cd scrapping/scripts/v.Apr.2022/
+$ python main.py
 ```
 
 ### Integrate all posts

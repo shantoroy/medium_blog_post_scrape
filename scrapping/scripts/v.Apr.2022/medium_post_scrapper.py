@@ -26,7 +26,7 @@ class MediumScrapper(object):
         driver.get(base_url)
 
         initial_XPATH = "//*[@id='root']/div/div[3]/div/div/main/div/div/div/div/div[2]/div[9]/div/div/button"
-        max_click_SHOW_MORE = 2
+        max_click_SHOW_MORE = 500
         count = 1 
 
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, initial_XPATH))).click()
@@ -55,7 +55,6 @@ class MediumScrapper(object):
         while article_count <= article_max_possible_ID:
             # replacing 1 with all increasing integer values, we get 1,2,3,... for div[] right before `article`
             new_article_XPATH = init_article_XPATH[:67] + str(article_count) + init_article_XPATH[68:]
-            print(new_article_XPATH)
             
             # help : https://stackoverflow.com/questions/12579061/python-selenium-find-object-attributes-using-xpath
             for element in driver.find_elements(By.XPATH, new_article_XPATH):
@@ -73,9 +72,12 @@ class MediumScrapper(object):
         # need to remove contents from `?source`
         mod_link_list = []
         for link in link_list:
-            target = link.find("?source")
-            link = link[:target]
-            mod_link_list.append(link)
+            try:
+                target = link.find("?source")
+                link = link[:target]
+                mod_link_list.append(link)
+            except Exception as e:
+                print(str(e))
 
         return mod_link_list
 

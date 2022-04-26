@@ -10,12 +10,15 @@ except FileNotFoundError as fx:
 if __name__ == '__main__':
     global_tag_list = []
 
+    # create your own tag/file list here
+
     # file_name_list = ["truffle.json", "web3.json", "etherscan.json",
     #                   "solidity.json", "reentrancy.json", "ethereum.json", "metamask.json",
     #                   "erc20.json", "vyper.json", "myetherwallet.json", "security.json"]
     # tag_list = ["truffle", "web3", "etherscan", "solidity", "reentrancy",
     #             "ethereum", "metamask", "erc20", "vyper", "myetherwallet", "smart contract security"]
 
+    # for testing
     file_name_list = ["metamask.json"]
     tag_list = ["metamask"]
 
@@ -32,14 +35,18 @@ if __name__ == '__main__':
     for file_name, tag in zip(file_name_list, tag_list):
         scrapper = MediumScrapper(tag, CHROME_DRIVER_PATH=CHROME_DRIVER_PATH)
         output_filename = os.path.join(data_target_dir, file_name)
-        data = scrapper.get_post_contents()
-        with open(output_filename, 'w') as fp:
-            json.dump(data, fp)
+        try:
+            data = scrapper.get_post_contents()
+            with open(output_filename, 'w') as fp:
+                json.dump(data, fp)
+            
+            print("")
+            print("==========================================")
+            print("Check JSON file: {}".format(output_filename))
+            print("Total posts: {}".format(len(data)))
         
-        print("")
-        print("==========================================")
-        print("Check JSON file: {}".format(output_filename))
-        print("Total posts: {}".format(len(data)))
+        except Exception as e:
+            print(str(e))
 
         # print tags for now
         # will be useful if you really want to apply real snowball effect
@@ -51,4 +58,5 @@ if __name__ == '__main__':
             tag_list_snowball = [line.rstrip('\n') for line in f]
             for i in tag_list_snowball:
                 global_tag_list.append(i)
-        print("Tag List:", tag_list_snowball)
+            global_tag_list = list(set(global_tag_list))
+        print("Tag List:", list(set(tag_list_snowball)))
