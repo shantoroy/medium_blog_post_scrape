@@ -2,4 +2,6 @@
 .*
 !/.gitignore
 data
-script_post_scrape/v.Apr.2022/tags.txt
+scrapping/scripts/v.Apr.2022/tags.txt
+analysis/other_outputs
+analysis/other_plots
