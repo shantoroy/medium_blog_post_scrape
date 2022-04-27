@@ -3,7 +3,7 @@
 ## Initial Setup
 * Download chromedriver
 * Install Anaconda/ Miniconda (Recommended).
-* Create/run in a python 3.6 virtual environment
+* Create/run in a python >v3.6 virtual environment
 * run `pip install -r requirements.txt`
 
 ## Medium Post Analysis
@@ -16,17 +16,19 @@ $ python main.py
 
 ### Integrate all posts
 ```Bash
-$ cd ..
+$ cd dataset_building
 $ python all_posts_integration.py
 ```
 
 ### Remove Duplicate posts
 ```Bash
+$ cd dataset_building
 $ python remove_duplicate_items_json.py
 ```
 
 ### Post Analysis
 ```Bash
+$ cd analysis/scripts
 $ python post_analysis.py
 ```
 
