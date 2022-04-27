@@ -8,6 +8,7 @@
 
 ## Medium Post Analysis
 ### Download Blog Posts
+First add tags and related file names. Then do the following.
 ```Bash
 $ cd scrapping/scripts/v.Apr.2022/
 $ python main.py
