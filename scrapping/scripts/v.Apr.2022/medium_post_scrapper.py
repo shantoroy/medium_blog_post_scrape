@@ -52,7 +52,7 @@ class MediumScrapper(object):
                     time.sleep(10)
                     # adding a substring (increasing integer) before 9 so that we get -> 19,29,39,49,...
                     new_XPATH = initial_XPATH1[:67] + str(count) + initial_XPATH1[67:]
-                    print(new_XPATH)
+                    # print(new_XPATH)
                     WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, new_XPATH))).click()
                     print("Button clicked #", count+1)
                     count += 1

@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # call the scrapper class and start scrapping for tags one after another
     for file_name, tag in zip(file_name_list, tag_list):
         if tag not in visited_tag_list:
-            print(tag)
+            # print(tag)
             scrapper = MediumScrapper(tag, CHROME_DRIVER_PATH=CHROME_DRIVER_PATH)
             output_filename = os.path.join(data_target_dir, file_name)
             try:
