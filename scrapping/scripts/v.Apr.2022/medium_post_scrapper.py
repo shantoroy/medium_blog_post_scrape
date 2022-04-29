@@ -1,3 +1,16 @@
+#!/usr/bin/env python
+# -*-coding:utf-8 -*-
+'''
+@File    :   medium_post_scrapper.py
+@Time    :   2022/04/29 08:42:57
+@Author  :   Shanto Roy 
+@Version :   1.0
+@Contact :   sroy10@uh.edu
+@Desc    :   This file provides a class for scrolling down 
+             a medium query page to collect post links
+'''
+
+
 import time
 from bs4 import BeautifulSoup
 import requests

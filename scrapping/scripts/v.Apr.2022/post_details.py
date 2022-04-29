@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+# -*-coding:utf-8 -*-
+'''
+@File    :   post_details.py
+@Time    :   2022/04/29 08:41:49
+@Author  :   Shanto Roy 
+@Version :   1.0
+@Contact :   sroy10@uh.edu
+@Desc    :   This file provides a class for scrapping contents from each post
+'''
+
+
 import re
 import json
 

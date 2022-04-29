@@ -1,3 +1,16 @@
+#!/usr/bin/env python
+# -*-coding:utf-8 -*-
+'''
+@File    :   main.py
+@Time    :   2022/04/29 08:25:21
+@Author  :   Shanto Roy 
+@Version :   1.0
+@Contact :   sroy10@uh.edu
+@Desc    :   This is the main App file that calls the MediumScrapper Class to 
+             perform the scrapping tasks.
+'''
+
+
 import json
 import os, errno
 from medium_post_scrapper import MediumScrapper
@@ -9,18 +22,25 @@ except FileNotFoundError as fx:
 
 if __name__ == '__main__':
     global_tag_list = []
+    visited_tag_list = []
 
-    # create your own tag/file list here
+    # input initial tag/s in "tag.txt"
+    # for snowball effect...
+    # let's start by collecting tags continuously from each post, store in a global tag list
+    # and run scrapper for each tag that hasn't been visited before (use another list for visited)
+    # currently not using it
 
-    # file_name_list = ["truffle.json", "web3.json", "etherscan.json",
-    #                   "solidity.json", "reentrancy.json", "ethereum.json", "metamask.json",
-    #                   "erc20.json", "vyper.json", "myetherwallet.json", "security.json"]
-    # tag_list = ["truffle", "web3", "etherscan", "solidity", "reentrancy",
-    #             "ethereum", "metamask", "erc20", "vyper", "myetherwallet", "smart contract security"]
+    with open('tags.txt') as f:
+        tag_list = [line.rstrip('\n') for line in f]
+        for i in tag_list:
+            global_tag_list.append(i)
+        global_tag_list = list(set(global_tag_list))
+    print("Current Tag List:", list(set(tag_list)))
 
-    # for testing
-    file_name_list = ["metamask.json"]
-    tag_list = ["metamask"]
+
+    # create individual file names for each tag
+    file_name_list = [tag+".json" for tag in tag_list]
+
 
     # create directory 'data/individual_tag_data' to put individual tag posts
     data_target_dir = "../../../data/individual_tag_data"
@@ -33,30 +53,23 @@ if __name__ == '__main__':
     
     # call the scrapper class and start scrapping for tags one after another
     for file_name, tag in zip(file_name_list, tag_list):
-        scrapper = MediumScrapper(tag, CHROME_DRIVER_PATH=CHROME_DRIVER_PATH)
-        output_filename = os.path.join(data_target_dir, file_name)
-        try:
-            data = scrapper.get_post_contents()
-            with open(output_filename, 'w') as fp:
-                json.dump(data, fp)
+        if tag not in visited_tag_list:
+            print(tag)
+            scrapper = MediumScrapper(tag, CHROME_DRIVER_PATH=CHROME_DRIVER_PATH)
+            output_filename = os.path.join(data_target_dir, file_name)
+            try:
+                data = scrapper.get_post_contents()
+                with open(output_filename, 'w') as fp:
+                    json.dump(data, fp)
+                
+                print("")
+                print("==========================================")
+                print("Check JSON file: {}".format(output_filename))
+                print("Total posts: {}".format(len(data)))
             
-            print("")
-            print("==========================================")
-            print("Check JSON file: {}".format(output_filename))
-            print("Total posts: {}".format(len(data)))
+            except Exception as e:
+                print(str(e))
+
+            visited_tag_list.append(tag)
+
         
-        except Exception as e:
-            print(str(e))
-
-        # print tags for now
-        # will be useful if you really want to apply real snowball effect
-        # by collecting tags continuously from each post, store in a global tag list
-        # and run scrapper for each tag that hasn't been visited before (use another list for visited)
-        # currently not using it
-
-        with open('tags.txt') as f:
-            tag_list_snowball = [line.rstrip('\n') for line in f]
-            for i in tag_list_snowball:
-                global_tag_list.append(i)
-            global_tag_list = list(set(global_tag_list))
-        print("Tag List:", list(set(tag_list_snowball)))
