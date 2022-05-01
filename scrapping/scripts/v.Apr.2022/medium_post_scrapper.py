@@ -134,7 +134,14 @@ class MediumScrapper(object):
                 count += 1
                 print("Scrapping link {}: {}".format(count, link))
                 time.sleep(1)
-                request_link = requests.get(link, headers=headers)
+
+                try:
+                    request_link = requests.get(link, headers=headers, timeout=10)
+                except Exception as e:
+                    print(str(e))
+                    print("last try...")
+                    request_link = requests.get(link, headers=headers, timeout=10)
+
                 request_content = BeautifulSoup(request_link.content,
                                                 'html.parser')
                 post_details = PostDetais(request_content, link)

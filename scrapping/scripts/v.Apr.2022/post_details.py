@@ -89,7 +89,7 @@ class PostDetais(object):
         except Exception as e:
             error_trace = {}
             error_trace["link"] = self.link
-            error_trace["method"] = "get_title"
+            error_trace["method"] = "get_author_name"
             error_trace["message"] = str(e)
             print(json.dumps(error_trace, indent=4))
         return ""
@@ -131,7 +131,7 @@ class PostDetais(object):
         except Exception as e:
             error_trace = {}
             error_trace["link"] = self.link
-            error_trace["method"] = "get_title"
+            error_trace["method"] = "get_read"
             error_trace["message"] = str(e)
             print(json.dumps(error_trace, indent=4))
         return ""
