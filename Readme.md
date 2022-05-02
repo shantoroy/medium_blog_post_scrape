@@ -39,6 +39,14 @@ $ cd author_data
 $ python medium_author_scrapper.py
 ``` -->
 
+## Presentations
+* Final Poster -> [Overleaf](https://www.overleaf.com/read/hybfbykbprzx)
+* M3 Presentation -> [Drive](https://docs.google.com/presentation/d/1XZrFzwOyDV_hjNPUZVAXu3OJBAryUY2T/edit?usp=sharing&ouid=102574097582335023736&rtpof=true&sd=true)
+* Example Data Portion -> [Drive](https://tinyurl.com/MEDAA-Dataset)
+
+## Related Blog Posts
+* [Web Scrapping: Finding Necessary Contents from a Medium Dot Com Blog Post](https://shantoroy.com/webscrapping/web-scrap-a-medium-dot-com-blog-post/)
+* [Web Scrapping: Clicking the ‘Show More’ Button Multiple times in Medium.com Blog via Selenium](https://shantoroy.com/webscrapping/click-button-show-more-on-medium-dot-com-via-selenium/)
 
 ## N.B.
 * Do not forget to download the `chromedriver` of the similar version as of the chrome browser
