@@ -32,12 +32,12 @@ $ cd analysis/scripts
 $ python post_analysis.py
 ```
 
-## Medium Author Information Analysisls
+<!-- ## Medium Author Information Analysisls
 ### Download related author data
 ```Bash
-$ cd author data
+$ cd author_data
 $ python medium_author_scrapper.py
-```
+``` -->
 
 
 ## N.B.
