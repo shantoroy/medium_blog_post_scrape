@@ -1,47 +1,51 @@
-"""
-This program integrates all the relevant posts from
-JSON files for each keyword. We check relevancy by searching
-the keyword either in title or in tag. The program also
-prints the number of relevant items from each individual file.
+#!/usr/bin/env python
+# -*-coding:utf-8 -*-
+'''
+@File    :   all_post_integration.py
+@Time    :   2022/05/01 20:47:26
+@Author  :   Shanto Roy 
+@Version :   1.0
+@Contact :   sroy10@uh.edu
+@Desc    :   This program integrates all the relevant posts from
+             JSON files for each keyword. We check relevancy by searching
+             the keyword either in title or in tag. The program also
+             prints the number of relevant items from each individual file.
+'''
 
-Author : Shanto Roy
-Year : 2019
-"""
 
 import json
+import os
 final_count = 0
 final_json_data = []
 
-file_name_list = ["smart-contract.json", "smart-contracts.json", "metamask.json",
-                      "solidity.json", "vyper.json",
-                      "truffle.json", "web3.json", "erc20.json", "security.json"]
-tag_list = ["smart contracts", "smart contract", "metamask", "solidity", "vyper",
-                "smart contract", "web3", "erc20", "security"]
+path = os.path.join(os.getcwd(), "data/individual_tag_data")
+# print(path)
+
+file_name_list = os.listdir(path)
+# remove unnecessary files
+file_name_list = [i for i in file_name_list if i.endswith('.json')]
+tag_list = [i[:len(i)-5] for i in file_name_list]
 
 for file_name, tag in zip(file_name_list, tag_list):
 
     count = 0
-    json_data = json.load(open("post_data/"+file_name))
+    json_data = json.load(open(os.path.join(path,file_name)))
 
     # Check if posts are relevant by checking tags in title or tag
     for key in json_data:
-        tags = key['tags']
-        titles = key['title']
-
-        if tag in key['title'].lower():
+        try:
             final_json_data.append(key)
             count += 1
-        else:
-            for item in tags:
-                if tag in item.lower():
-                    final_json_data.append(key)
-                    count += 1
-                    final_count += 1
+            final_count += 1
+        except Exception as e:
+            print(str(e))
+
     print("Number of total post for ", tag, "is =", count)
 
 
 # Output the updated file with pretty JSON
-open("integrated_all_post_data_final.json", "w").write(
+target_filename = "data/integrated_all_post_data_final.json"
+open(os.path.join(os.getcwd(),target_filename), "w").write(
         json.dumps(final_json_data, sort_keys=True, indent=4, separators=(',', ': '))
     )
 

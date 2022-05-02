@@ -1,0 +1,118 @@
+				2019
+
+Number of total Questions in 2019 is = 5623
+
+ Month    No of Questions
+------ 	 -------------
+1 				 668
+2 				 569
+3 				 528
+4 				 519
+5 				 515
+6 				 407
+7 				 468
+8 				 450
+9 				 420
+10 				 429
+11 				 379
+12 				 271
+
+
+				2018
+
+Number of total Questions in 2018 is = 7989
+
+ Month    No of Questions
+------ 	 -------------
+1 				 619
+2 				 648
+3 				 715
+4 				 707
+5 				 759
+6 				 749
+7 				 649
+8 				 714
+9 				 622
+10 				 644
+11 				 612
+12 				 551
+
+
+				2017
+
+Number of total Questions in 2017 is = 4835
+
+ Month    No of Questions
+------ 	 -------------
+1 				 277
+2 				 290
+3 				 382
+4 				 338
+5 				 354
+6 				 354
+7 				 341
+8 				 464
+9 				 434
+10 				 548
+11 				 538
+12 				 515
+
+
+				2016
+
+Number of total Questions in 2016 is = 1848
+
+ Month    No of Questions
+------ 	 -------------
+1 				 91
+2 				 101
+3 				 111
+4 				 146
+5 				 129
+6 				 174
+7 				 146
+8 				 150
+9 				 172
+10 				 195
+11 				 207
+12 				 226
+
+
+				2015
+
+Number of total Questions in 2015 is = 580
+
+ Month    No of Questions
+------ 	 -------------
+1 				 30
+2 				 27
+3 				 37
+4 				 31
+5 				 37
+6 				 38
+7 				 57
+8 				 49
+9 				 71
+10 				 69
+11 				 67
+12 				 67
+
+
+				2014
+
+Number of total Questions in 2014 is = 160
+
+ Month    No of Questions
+------ 	 -------------
+1 				 13
+2 				 6
+3 				 8
+4 				 18
+5 				 10
+6 				 11
+7 				 8
+8 				 17
+9 				 12
+10 				 13
+11 				 16
+12 				 28
